@@ -28,9 +28,19 @@ const ProductCreateController = async (req, res) => {
 
 const ProductGetAllController = async (req, res) => {
     const { userId } = req.body;
+    console.log("userId", userId)
     try {
-        const product = await Product.find({ userId })
-        return res.json({ success: true, message: 'fetch all product successfully', product: product });
+        const product = await Product.find()
+        console.log(
+            product, "sdfjksdfshad"
+        )
+        if (!product) {
+            return res.json({ success: false, message: 'product not found', })
+        }
+        if (product) {
+            return res.json({ success: true, message: 'fetch all product successfully', data: product });
+        }
+        // return res.json({ success: true, message: 'fetch all product successfully', product: product });
     } catch (error) {
         console.log("error in fetching all products ")
         return res.json({ success: false, message: "Failed to fetch all products" });
